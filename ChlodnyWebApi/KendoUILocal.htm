@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>KENDOUI BABY (Local) !!!</title>
+        <link href="Content/2012.1.322/kendo.common.min.css" rel="stylesheet" type="text/css" />
+        <link href="Content/2012.1.322/kendo.metro.min.css" rel="stylesheet" type="text/css" />
+        <script src="Scripts/jquery-1.7.1.js" type="text/javascript"></script>      
+        <script src="Scripts/2012.1.322/kendo.web.min.js" type="text/javascript"></script>
+        <script src="Scripts/KendoUIExampleLocal.js" type="text/javascript"></script>
+
+
+        
+
+
+ </head>
+    <body>
+        <div id="example" class="k-content">
+             <article id="inputSection">
+                <section class="submission">
+                    <label>Search ID</label>
+                    <input type="text" id="customerId" />
+                    <button id="makeRequest" type="button">Search ID</button>
+               
+                    <button id="allRequest" type="button">Refresh All</button>
+                </section>
+            </article>
+            
+
+            <div id="grid"></div>
+            <br/><br/><hr/><br/><br/>
+            <div id="grid2"></div>
+
+
+         
+        </div>
+        
+        <script type="text/javascript">
+            $(document).ready(function () {
+                KendoExample.KendoWireUp();
+            })
+    </script>
+
+   
+
+
+
+
+
+    </body>
+</html>
