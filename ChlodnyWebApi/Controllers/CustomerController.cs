@@ -1,5 +1,7 @@
 ﻿namespace ChlodnyWebApi.Controllers
 {
+    using System;
+    using System.Globalization;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
@@ -11,31 +13,48 @@
     {
         private readonly ChinookContext contexts1 = new ChinookContext();
 
+        // Retrieve = GET
         public IQueryable<Customer> GetCustomer()
         {
             return this.contexts1.Customers.Where(c => c.Deleted == false);
         }
 
-        public IQueryable<Customer> GetCustomer(int id)
+        public HttpResponseMessage<Customer> GetCustomer(int id)
         {
-            return this.contexts1.Customers.Where(c => c.CustomerId == id && c.Deleted == false).AsQueryable();
+            using (var context = new ChinookContext())
+            {
+                var customer = (from i in context.Customers where i.CustomerId == id select i).FirstOrDefault();
+                
+                if (customer == null)
+                {
+                    var notfoundMessage = new HttpResponseMessage<Customer>(HttpStatusCode.NotFound);
+                    return notfoundMessage;
+                }
+
+                var newMessage = new HttpResponseMessage<Customer>(customer);
+                return newMessage;
+
+                // return this.contexts1.Customers.Where(c => c.CustomerId == id && c.Deleted == false).AsQueryable();
+            }
         }
 
-        public string DeleteCustomer(int id)
+        // Delete = DELETE
+        public HttpResponseMessage<Customer> DeleteCustomer(int id)
         {
-            string response;
+            HttpResponseMessage<Customer> response;
             using (var context = new ChinookContext())
             {
                 var customerTest = context.Customers.Single(c => c.CustomerId == id);
                 customerTest.Deleted = true;
                 context.SaveChanges();
-                response = new HttpResponseMessage<Customer>(customerTest, HttpStatusCode.Accepted).ToString();
+                response = new HttpResponseMessage<Customer>(customerTest, HttpStatusCode.Accepted);
             }
 
             return response;
         }
 
-        public Customer PostCustomer(Customer customer)
+        // Create = PUT
+        public HttpResponseMessage<Customer> PutCustomer(Customer customer)
         {
             using (var context = new ChinookContext())
             {
@@ -50,7 +69,32 @@
                 {
                     context.Customers.Add(customer);
                     context.SaveChanges();
-                    return customer;
+                    var newMessage = new HttpResponseMessage<Customer>(customer, HttpStatusCode.Created);
+
+                    newMessage.Headers.Location = new Uri(
+                        Request.RequestUri, "/Customer/" + customer.CustomerId.ToString(CultureInfo.InvariantCulture));
+                    return newMessage;
+                }
+
+                return this.PostCustomer(customer);
+            }
+        } 
+
+        // Update = POST
+        public HttpResponseMessage<Customer> PostCustomer(Customer customer)
+        {
+            using (var context = new ChinookContext())
+            {
+                Customer customerTest = null;
+
+                if (customer.CustomerId != 0)
+                {
+                    customerTest = context.Customers.Single(c => c.CustomerId == customer.CustomerId);
+                }
+
+                if (customerTest == null)
+                {
+                    return this.PutCustomer(customer);
                 }
 
                 // todo this has to have an easier way.  Customer.Attach throws an error
@@ -66,7 +110,12 @@
                 customerTest.Company = customer.Company;
 
                 context.SaveChanges();
-                 return customer;
+
+                var newMessage = new HttpResponseMessage<Customer>(customer, HttpStatusCode.Accepted);
+
+                newMessage.Headers.Location = new Uri(
+                    Request.RequestUri, "/Customer/" + customer.CustomerId.ToString(CultureInfo.InvariantCulture));
+                return newMessage;
             }
         }
     }

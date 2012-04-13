@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>jQuery BABY (Local) !!!!</title>
-    <link href="Content/jQuery/themes/base/jquery.ui.all.css" rel="stylesheet" type="text/css" />
-    <link href="Content/jQuery/demos.css" rel="stylesheet" type="text/css" />
+    <link href="Content/jqueryGrid/themes/base/jquery.ui.all.css" rel="stylesheet" type="text/css" />
+    <link href="Content/jqueryGrid/jQueryUICssLocal.css" rel="stylesheet" type="text/css" />
     <script src="Scripts/jquery-1.7.1.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/globalize.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/jquery.tmpl.js" type="text/javascript"></script>
@@ -20,7 +20,7 @@
     <script src="Scripts/jqueryGrid/ui/jquery.ui.selectable.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/ui/jquery.ui.observable.js" type="text/javascript"></script>    
     <script src="Scripts/jqueryGrid/ui/jquery.ui.dataview.js" type="text/javascript"></script>
-    <script src="Scripts/jqueryGrid/ui/jquery.ui.dataviewlocal.js" type="text/javascript"></script>
+    <script src="Scripts/jqueryGrid/ui/jquery.ui.dataviewlocal.js" type="text/javascript"></script> 
     <script src="Scripts/jqueryGrid/ui/jquery.ui.grid.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/dataview-odata.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/pager.js" type="text/javascript"></script>
@@ -30,256 +30,14 @@
     <script src="Scripts/jqueryGrid/navigator.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/localstore.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/helpers.js" type="text/javascript"></script>
-    
-    <script>
-        $(function () {
-            var localDevelopers;
-            $.ajax({
-                dataType: "json",
-                url: "http://localhost:60025/api/customer",
-                async: false,
-                success: function (result) {
-                    localDevelopers = result;
-                }
-            });
-
-            var developers = $.ui.dataviewlocal({
-                input: localDevelopers,
-                paging: {
-                    limit: 10
-                }
-            });
-
-            var selected = [];
-            // update status when selection changes
-            $.observable(selected).bind("insert remove", function () {
-                $(".selected-status").text(selected.length);
-            });
-
-            var grid = $("#developers-local").grid({
-                source: developers.result,
-                refresh: function () {
-                    var paging = developers.options.paging,
-                    total = developers.totalCount;
-                    $(".paging-from").text(paging.offset + 1);
-                    var to = paging.offset + paging.limit + 1;
-                    if (to > total) {
-                        to = total;
-                    }
-                    $(".paging-to").text(to);
-                    $(".paging-total").text(total);
-                }
-            });
-
-            grid.gridSelectable({
-                selected: selected
-            });
-
-            $("#developers-selected").grid({
-                source: selected
-            });
-            
-            $("#developers-local").grid({
-                source: developers,
-                heightStyle: "fill"
-            }).gridFilter().gridSort();
-
-            $("#pager").pager({
-                source: developers
-            });
-
-            $("#pagesize").change(function () {
-                developers.option("paging.limit", +$(this).val()).refresh();
-            });
-            
-            var developer;
-            $("#editCustomer").click(function () {
-                if (!selected.length) {
-                    alert("None selected");
-                    return;
-                }
-                developer = selected[0];
-                $("#edit-tmpl").tmpl(meta(developer)).appendTo(editForm.find("fieldset").empty());
-                editForm.dialog("open");
-            });
-            $("[type=submit]").button();
-            var editForm = $("#editForm").dialog({
-                autoOpen: false,
-                width: 350,
-                modal: true
-            }).hide().submit(function (event) {
-                event.preventDefault();
-
-                var customerId = $("#CustomerId").val();
-                var firstName = $("#FirstName").val();
-                var lastName = $("#LastName").val();
-                var address = $("#Address").val();
-                var city = $("#City").val();
-                var postalCode = $("#PostalCode").val();
-                var state = $("#State").val();
-                var country = $("#Country").val();
-                var email = $("#Email").val();
-                var phone = $("#Phone").val();
-                var fax = $("#Fax").val();
-                var company = $("#Company").val();
-
-                var sentData = {
-                    CustomerId: customerId,
-                    FirstName: firstName,
-                    LastName: lastName,
-                    Address: address,
-                    City: city,
-                    PostalCode: postalCode,
-                    State: state,
-                    Country: country,
-                    Email: email,
-                    Phone: phone,
-                    Fax: fax,
-                    Company: company
-                };
-
-                $.ajax({ type: "POST", url: "http://localhost:60025/api/customer", data: sentData });
-                $.observable(developer, localDevelopers).property(serializeForm(this));
-                developers.refresh();
-                // TODO hide tooltip
-                editForm.dialog("close");
-            });
-
-            $("#removeDeveloper").click(function () {
-                if (!selected.length) {
-                    alert("None selected");
-                    return;
-                }
-                var customerId = selected[0].CustomerId;
-                $.ajax({ type: "DELETE", url: "http://localhost:60025/api/customer/" + customerId });
-
-                $.observable(localDevelopers).remove(selected); 
-                $.observable(selected).remove(0, selected.length);
-                developers.refresh();
-            });
-
-            $("#clearSelection").click(function () {
-                $.observable(selected).remove(0, selected.length);
-                developers.refresh();
-            });
-
-            $("#newCustomer").click(function () {
-                var newDeveloper = {
-                    FirstName: "",
-                    LastName: "",
-                    Address: "",
-                    City: "",
-                    PostalCode: "",
-                    State: "",
-                    Country: "",
-                    Email: "",
-                    Phone: "",
-                    Fax: "",
-                    Company: ""
-                };
-
-
-                $("#edit-tmpl").tmpl(meta(newDeveloper)).appendTo(newForm.find("fieldset").empty());
-                newForm.dialog("open");
-            });
-            $("[type=submit]").button();
-            var newForm = $("#newForm").dialog({
-                autoOpen: false,
-                width: 350,
-                modal: true
-            }).hide().submit(function (event) {
-                event.preventDefault();
-
-                var firstName = $("#FirstName").val();
-                var lastName = $("#LastName").val();
-                var address = $("#Address").val();
-                var city = $("#City").val();
-                var postalCode = $("#PostalCode").val();
-                var state = $("#State").val();
-                var country = $("#Country").val();
-                var email = $("#Email").val();
-                var phone = $("#Phone").val();
-                var fax = $("#Fax").val();
-                var company = $("#Company").val();
-
-                var sentData = {
-                    FirstName: firstName,
-                    LastName: lastName,
-                    Address: address,
-                    City: city,
-                    PostalCode: postalCode,
-                    State: state,
-                    Country: country,
-                    Email: email,
-                    Phone: phone,
-                    Fax: fax,
-                    Company: company
-                };
-
-                $.ajax({ type: "POST", url: "http://localhost:60025/api/customer", data: sentData,
-                    success: function (result) {
-                        $.observable(localDevelopers).insert(result);
-                        developers.refresh();
-                    } 
-                });
-
-                newForm.dialog("close");
-            });
-
-            $("#refresh").button({
-                icons: {
-                    primary: "ui-icon-refresh"
-                }
-            }).click(function () {
-
-                $.ajax({
-                    dataType: "json",
-                    url: "http://localhost:60025/api/customer",
-                    async: false,
-                    success: function (result) {
-                        $.observable(localDevelopers).replaceAll(result);
-                    }
-                });
-                
-               developers.refresh();
-
-            });
-
-
-
-
-            developers.refresh();
-        });
-    </script>
-    
-    <style>
-        .ui-grid .ui-selecting td { background: #eef; }
-        .ui-grid .ui-selected td { background: #ddf; }
-        thead td { text-align: center; }
-        form label { display: block; }
-       <!-- form input { width: 95%; margin-bottom: 8px; padding: .4em; }-->
-        fieldset { border: none; }
-    </style>
+    <script src="Scripts/jQueryUIExampleLocal.js" type="text/javascript"></script>
 </head>
 <body>
 
 <h2>jQuery UI Grid</h2>
-<table id="developers-local">
+<table id="customers-local">
     <caption>Customers Grid</caption>
-   <colgroup>
-        <col width="10px">
-        <col width="50px">
-        <col width="50px">
-        <col width="50px">
-        <col width="10px">
-        <col width="50px">
-        <col width="50px">
-        <col width="50px">
-        <col width="10px">
-        <col width="50px">
-        <col width="50px">
-        <col width="50px">
-    </colgroup>
+   
     <thead>
         <tr>
             <th data-property="CustomerId">ID</th>
@@ -287,9 +45,9 @@
             <th data-property="LastName">Last Name</th>
             <th data-property="Address">Address</th>
             <th data-property="City">City</th>
-            <th data-property="PostalCode">PostalCode</th>
+            <th data-property="PostalCode">Postal Code</th>
             <th data-property="State">State</th>
-            <th data-property="Country" data-editor="countrycomplete">Country</th>
+            <th data-property="Country">Country</th>
             <th data-property="Email">Email</th>
             <th data-property="Phone">Phone</th>
             <th data-property="Fax">Fax</th>
@@ -323,36 +81,35 @@
     <hr/>
     <br/>
 
+    <table id="customers-selected">
+        <caption>Selected Customer</caption>
+        <thead>
+            <tr>
+                <th data-property="CustomerId">ID</th>
+                <th data-property="FirstName">First Name</th>
+                <th data-property="LastName">Last Name</th>
+                <th data-property="Address">Address</th>
+                <th data-property="City">City</th>
+                <th data-property="PostalCode">PostalCode</th>
+                <th data-property="State">State</th>
+                <th data-property="Country">Country</th>
+                <th data-property="Email">Email</th>
+                <th data-property="Phone">Phone</th>
+                <th data-property="Fax">Fax</th>
+                <th data-property="Company">Company</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 
-    <table id="developers-selected">
-    <caption>Selected Customer</caption>
-    <thead>
-        <tr>
-            <th data-property="CustomerId">ID</th>
-            <th data-property="FirstName">First Name</th>
-            <th data-property="LastName">Last Name</th>
-            <th data-property="Address">Address</th>
-            <th data-property="City">City</th>
-            <th data-property="PostalCode">PostalCode</th>
-            <th data-property="State">State</th>
-            <th data-property="Country" data-editor="countrycomplete">Country</th>
-            <th data-property="Email">Email</th>
-            <th data-property="Phone">Phone</th>
-            <th data-property="Fax">Fax</th>
-            <th data-property="Company">Company</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
-
-    <div class="tools">
+   <div class="tools">
         <button id="newCustomer">New Customer</button>
         <button id="editCustomer">Edit Customer</button>
-        <button id="removeDeveloper">Remove Customer</button>
+        <button id="removecustomer">Remove Customer</button>
         <button id="clearSelection">Clear selection</button>
     </div>
-    <form id="editForm" title="Edit Customer">
+     <form id="editForm" title="Edit Customer">
         <fieldset>
         </fieldset>
         <input type="submit" value="Save changes" />
@@ -365,18 +122,24 @@
     </form>
 
     <script id="edit-tmpl" type="text/x-jquery-tmpl">
-{{if $.isArray(value)}}
-    <label>${label}</label>
-    <ul>
-        {{each(index, valueX) value}}
+        {{if $.isArray(value)}}
+        <label>${label}</label>
+        <ul>
+            {{each(index, valueX) value}}
             <li><input type="text" class="ui-widget-content ui-corner-all" name="${name}" placeholder="${label}" value="${valueX}" title="${label}" /></li>
-        {{/each}}
-    </ul>
-{{else}}
-    <label for="${name}">${label}</label>
-    <input type="text" class="ui-widget-content ui-corner-all" id="${name}" name="${name}" placeholder="${label}" value="${value}" title="${label}" />
-{{/if}}
-</script>
+            {{/each}}
+        </ul>
+        {{else}}
+        <label for="${name}">${label}</label>
+        <input type="text" class="ui-widget-content ui-corner-all" id="${name}" name="${name}" placeholder="${label}" value="${value}" title="${label}" />
+        {{/if}}
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            jQueryExample.jQueryWireUp();
+        })
+    </script>
 
 </body>
 </html>
