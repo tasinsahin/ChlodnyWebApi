@@ -23,7 +23,7 @@
         {
             using (var context = new ChinookContext())
             {
-                var customer = (from i in context.Customers where i.CustomerId == id select i).FirstOrDefault();
+                var customer = (from i in context.Customers where i.CustomerId == id where i.Deleted == false select i).FirstOrDefault();
                 
                 if (customer == null)
                 {
@@ -31,7 +31,7 @@
                     return notfoundMessage;
                 }
 
-                var newMessage = new HttpResponseMessage<Customer>(customer);
+                var newMessage = new HttpResponseMessage<Customer>(customer, HttpStatusCode.OK);
                 return newMessage;
 
                 // return this.contexts1.Customers.Where(c => c.CustomerId == id && c.Deleted == false).AsQueryable();
@@ -44,17 +44,25 @@
             HttpResponseMessage<Customer> response;
             using (var context = new ChinookContext())
             {
-                var customerTest = context.Customers.Single(c => c.CustomerId == id);
-                customerTest.Deleted = true;
-                context.SaveChanges();
-                response = new HttpResponseMessage<Customer>(customerTest, HttpStatusCode.Accepted);
+                var customerTest = context.Customers.Single(c => c.CustomerId == id && c.Deleted == false);
+
+                if (customerTest != null)
+                {
+                    customerTest.Deleted = true;
+                    context.SaveChanges();
+                    response = new HttpResponseMessage<Customer>(HttpStatusCode.Accepted);
+                }
+                else
+                {
+                    response = new HttpResponseMessage<Customer>(HttpStatusCode.NotFound);
+                }
             }
 
             return response;
         }
 
-        // Create = PUT
-        public HttpResponseMessage<Customer> PutCustomer(Customer customer)
+        // Create = Post
+        public HttpResponseMessage<Customer> PostCustomer(Customer customer)
         {
             using (var context = new ChinookContext())
             {
@@ -76,12 +84,12 @@
                     return newMessage;
                 }
 
-                return this.PostCustomer(customer);
+                return this.PutCustomer(customer);
             }
         } 
 
-        // Update = POST
-        public HttpResponseMessage<Customer> PostCustomer(Customer customer)
+        // Update = Put
+        public HttpResponseMessage<Customer> PutCustomer(Customer customer)
         {
             using (var context = new ChinookContext())
             {
@@ -94,7 +102,7 @@
 
                 if (customerTest == null)
                 {
-                    return this.PutCustomer(customer);
+                    return this.PostCustomer(customer);
                 }
 
                 // todo this has to have an easier way.  Customer.Attach throws an error

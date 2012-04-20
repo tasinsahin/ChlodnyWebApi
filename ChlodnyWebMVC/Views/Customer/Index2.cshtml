@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Customer List";
+}
+
+<h3>Customer List:</h3>
+
+@foreach(var item in Model)
+{
+    <li>
+        <h5>@item.CustomerId</h5>
+        <h5>@item.FirstName</h5>
+    </li>
+}

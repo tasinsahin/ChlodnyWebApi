@@ -1,38 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Web.Http;
-
-namespace ChlodnyWebApi.Controllers
+﻿namespace ChlodnyWebApi.Controllers
 {
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Web.Http;
+
+    // setting up for JSONP Demo
     public class ValuesController : ApiController
     {
-        // GET /api/values
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
         // GET /api/values/5
-        public string Get(int id)
+        public HttpResponseMessage<JsonPReturn> Get(int id, string callback)
         {
-            return "value";
+            var ret = new HttpResponseMessage<JsonPReturn>(new JsonPReturn {CallbackName = callback, Json = "{'id':'" + id.ToString(CultureInfo.InvariantCulture) + "','data':'Hello JSONP'}"});
+
+            ret.Content.Headers.ContentType = new MediaTypeHeaderValue("application/javascript");
+            return ret;
         }
 
-        // POST /api/values
-        public void Post(string value)
+        public class JsonPReturn
         {
-        }
+            public string CallbackName { get; set; }
 
-        // PUT /api/values/5
-        public void Put(int id, string value)
-        {
-        }
-
-        // DELETE /api/values/5
-        public void Delete(int id)
-        {
+            public string Json { get; set; }
         }
     }
 }

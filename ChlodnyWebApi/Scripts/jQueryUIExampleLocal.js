@@ -11,9 +11,10 @@ jQueryExample.jQueryWireUp = function () {
     jQueryExample.LoadDataGrid();
     jQueryExample.PageSizeOptions();
     jQueryExample.SelectedGridOptions();
-    
+
     customers.refresh();
 
+    jQueryExample.RemoveButton();
     jQueryExample.RefreshButton();
     jQueryExample.NewCustomer();
     jQueryExample.EditCustomer();
@@ -89,7 +90,7 @@ jQueryExample.SelectedGridOptions = function() {
 };
 
 jQueryExample.RemoveButton = function () {
-    $("#removecustomer").click(function () {
+    $("#removeCustomer").click(function () {
         if (!selected.length) {
             alert("None selected");
             return;
@@ -158,7 +159,17 @@ jQueryExample.EditCustomer = function() {
             Company: company
         };
 
-        $.ajax({ type: "POST", url: "http://localhost:60025/api/customer", data: sentData });
+        $.ajax({ 
+//                statusCode: {
+//            404: function() {
+//                alert("There was an error Posting");
+//            }
+            type: 'POST', 
+            dataType: 'json', 
+            url: 'http://localhost:60025/api/customer', 
+            data: sentData }
+        
+    );
         $.observable(customer, localCustomers).property(serializeForm(this));
         customers.refresh();
         // TODO hide tooltip
@@ -220,7 +231,7 @@ jQueryExample.NewCustomer = function() {
             Company: company
         };
 
-        $.ajax({ type: "POST", url: "http://localhost:60025/api/customer", data: sentData,
+        $.ajax({ type: 'POST', dataType: 'json', url: 'http://localhost:60025/api/customer', data: sentData,
             success: function (result) {
                 $.observable(localCustomers).insert(result);
                 customers.refresh();

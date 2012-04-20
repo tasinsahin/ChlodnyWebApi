@@ -29,6 +29,9 @@
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
+
+            GlobalConfiguration.Configuration.Formatters.Clear();
+            GlobalConfiguration.Configuration.Formatters.Add(new MyJSONPMediaTypeFormatter());
         }
 
         protected void Application_Start()
@@ -39,9 +42,7 @@
 #else // turn off migration migration for production
              Database.SetInitializer<ChinookContext>(null);
 #endif
-
-
-
+            
             AreaRegistration.RegisterAllAreas();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
