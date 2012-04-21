@@ -12,7 +12,13 @@
         // GET /api/values/5
         public HttpResponseMessage<JsonPReturn> Get(int id, string callback)
         {
-            var ret = new HttpResponseMessage<JsonPReturn>(new JsonPReturn {CallbackName = callback, Json = "{'id':'" + id.ToString(CultureInfo.InvariantCulture) + "','data':'Hello JSONP'}"});
+            var ret =
+                new HttpResponseMessage<JsonPReturn>(
+                    new JsonPReturn
+                        {
+                            CallbackName = callback,
+                            Json = "{'id':'" + id.ToString(CultureInfo.InvariantCulture) + "','data':'Hello JSONP'}"
+                        });
 
             ret.Content.Headers.ContentType = new MediaTypeHeaderValue("application/javascript");
             return ret;

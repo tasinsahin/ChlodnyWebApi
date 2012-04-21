@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ChlodnyWebApi
+﻿namespace ChlodnyWebApi
 {
     using System.IO;
     using System.Net.Http.Formatting;
     using System.Threading.Tasks;
     using ChlodnyWebApi.Controllers;
 
+    using System;
+    using System.Text;
 
-    public class MyJSONPMediaTypeFormatter : MediaTypeFormatter
+    public class MyJsonpMediaTypeFormatter : MediaTypeFormatter
     {
         protected override bool CanWriteType(Type type)
         {

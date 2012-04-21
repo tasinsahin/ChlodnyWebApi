@@ -31,7 +31,7 @@
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
 
             GlobalConfiguration.Configuration.Formatters.Clear();
-            GlobalConfiguration.Configuration.Formatters.Add(new MyJSONPMediaTypeFormatter());
+            GlobalConfiguration.Configuration.Formatters.Add(new MyJsonpMediaTypeFormatter());
         }
 
         protected void Application_Start()
