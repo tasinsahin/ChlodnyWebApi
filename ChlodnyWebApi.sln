@@ -8,25 +8,17 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{41237CCB-C850-4498-B016-4EED4CFF99DE}"
 	ProjectSection(SolutionItems) = preProject
 		Chinook_SqlServer_AutoIncrementPKs.sql = Chinook_SqlServer_AutoIncrementPKs.sql
-		License.txt = License.txt
-		ReadMe.txt = ReadMe.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChlodnyWebMVC", "ChlodnyWebMVC\ChlodnyWebMVC.csproj", "{AD939D83-5D72-4B91-BAAA-349DF37E40E9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F39563DD-32AF-4815-A172-F70F16E76DD0}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://chlodny.tfspreview.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = ChlodnyWebApi\\ChlodnyWebApi.csproj
-		SccProjectName1 = ChlodnyWebApi
-		SccLocalPath1 = ChlodnyWebApi
-		SccProjectUniqueName2 = DataAccess\\DataAccess.csproj
-		SccProjectName2 = DataAccess
-		SccLocalPath2 = DataAccess
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
