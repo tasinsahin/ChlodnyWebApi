@@ -5,6 +5,9 @@
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
+
+    using ChlodnyWebApi.Formatter;
+
     using DataAccess;
 
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -31,7 +34,7 @@
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
 
             GlobalConfiguration.Configuration.Formatters.Clear();
-            GlobalConfiguration.Configuration.Formatters.Add(new MyJsonpMediaTypeFormatter());
+            GlobalConfiguration.Configuration.Formatters.Add(new JsonpMediaTypeFormatter());
         }
 
         protected void Application_Start()
