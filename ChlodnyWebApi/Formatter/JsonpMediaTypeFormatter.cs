@@ -1,4 +1,6 @@
-﻿namespace ChlodnyWebApi.Formatter
+﻿// formatter from https://github.com/thinktecture/Thinktecture.Web.Http/blob/master/Thinktecture.Web.Http/Formatters/JsonpFormatter.cs
+
+namespace ChlodnyWebApi.Formatter
 {
     using System;
     using System.IO;
