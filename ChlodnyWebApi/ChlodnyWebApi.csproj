@@ -675,7 +675,8 @@
     <Content Include="Scripts\jqueryGrid\ui\jquery.ui.widget.js" />
     <Content Include="Scripts\jQueryUIExampleLocal.js" />
     <Content Include="Scripts\KendoUIExampleLocal.js" />
-    <Content Include="Scripts\knockout.debug.js" />
+    <Content Include="Scripts\knockout-2.1.0.debug.js" />
+    <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\knockout.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Web.config" />

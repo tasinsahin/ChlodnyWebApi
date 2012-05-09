@@ -1,4 +1,5 @@
-﻿var jQueryExample = {}; // holds our functions
+﻿/// <reference path="jquery-1.7.2-vsdoc.js" />
+var jQueryExample = {}; // holds our functions
 var localCustomers;    // used for the ajax calls and part of the dataview
 var customers;         // used for the data view
 var selected = [];      // used to hold which rows were selected.
@@ -6,6 +7,8 @@ var grid;               // the datagrid
 
 
 jQueryExample.jQueryWireUp = function () {
+    jQueryExample.LoadStyles();
+    
     jQueryExample.GetAllCustomer();
     jQueryExample.LoadDataView();
     jQueryExample.LoadDataGrid();
@@ -21,6 +24,12 @@ jQueryExample.jQueryWireUp = function () {
     jQueryExample.ClearButton();
 };
 
+jQueryExample.LoadStyles = function () {
+    $('#switcher').themeswitcher();
+    $('TFOOT > TR > TD').addClass('class123');
+//    $('THEAD > TR > TH').addClass('input123');
+//    $('input:text').width('10').addClass("mod"); ;
+};
 
 jQueryExample.GetAllCustomer = function() {
     $.ajax({
@@ -164,7 +173,7 @@ jQueryExample.EditCustomer = function() {
 //            404: function() {
 //                alert("There was an error Posting");
 //            }
-            type: 'POST', 
+            type: 'Put', 
             dataType: 'json', 
             url: 'http://localhost:60025/api/customer', 
             data: sentData }
