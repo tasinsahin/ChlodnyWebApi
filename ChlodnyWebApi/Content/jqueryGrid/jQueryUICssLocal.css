@@ -1,6 +1,7 @@
 
 body {
-    font-size: 70%;
+    font-size: 65%;
+    background: rgb(226, 226, 226);
 }
 
 /*
@@ -343,8 +344,7 @@ div.demo-description {
         form label { display: block; }
        /* form input { width: 95%; margin-bottom: 8px; padding: .4em; } */
         fieldset { border: none; }
-        
-.class123 {width: 7%}
-.input123 {width: 20px}
+
+.pager123{text-align: left}
 
 .ui-input-text { display: inline-block;  width: 70%;  margin: 0 2% 0 0; }

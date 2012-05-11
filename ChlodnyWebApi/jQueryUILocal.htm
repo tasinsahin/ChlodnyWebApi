@@ -23,6 +23,8 @@
     <script src="Scripts/jqueryGrid/ui/jquery.ui.observable.js" type="text/javascript"></script>    
     <script src="Scripts/jqueryGrid/ui/jquery.ui.dataview.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/ui/jquery.ui.dataviewlocal.js" type="text/javascript"></script> 
+    <script src="Scripts/jqueryGrid/ui/jquery.ui.autocomplete.js" type="text/javascript"></script>
+    <script src="Scripts/jqueryGrid/ui/jquery.ui.progressbar.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/ui/jquery.ui.grid.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/dataview-odata.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/pager.js" type="text/javascript"></script>
@@ -34,32 +36,22 @@
     <script src="Scripts/jqueryGrid/helpers.js" type="text/javascript"></script>
     <script src="Scripts/jQueryUIExampleLocal.js" type="text/javascript"></script>
     <!--<script type="text/javascript" src="http://jqueryui.com/js/jquery.js"></script>-->
-    <script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/">
-</script>
+    <script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
+       
+    
 </head>
 <body>
-<div id="switcher"></div>
+    <div id="switcher"></div>
+    <input id="city"/>
+    <div id="dialog"><textarea id="messageDialog"></textarea></div>
 <h2>jQuery UI Grid</h2>
 <table id="customers-local">
     <caption>Customers Grid</caption>
-   <colgroup>
-            <col width="3%">
-            <col width="8%">
-            <col width="8%">
-            <col width="12%">
-            <col width="7%">
-            <col width="5%">
-            <col width="5%">
-            <col width="8%">
-            <col width="13%">
-            <col width="8%">
-            <!--<col width="8%">
-            <col width="8%">-->
-        </colgroup>
+   
     <thead>
         <tr>
             <th data-property="CustomerId">ID</th>
-            <th data-property="FirstName">First Name</th>
+            <th id="FirstName" data-property="FirstName">First Name</th>
             <th data-property="LastName">Last Name</th>
             <th data-property="Address">Address</th>
             <th data-property="City">City</th>
@@ -68,19 +60,17 @@
             <th data-property="Country">Country</th>
             <th data-property="Email">Email</th>
             <th data-property="Phone">Phone</th>
-           <!-- <th data-property="Fax">Fax</th>
-            <th data-property="Company">Company</th>-->
         </tr>
     </thead>
     <tbody>
     </tbody>
     <tfoot>
         <tr>
-            <td>
+            <td colspan="3">
                 <button id="refresh">Refresh</button>
                 <span id="pager"></span>
             </td>
-            <td>
+            <td colspan="2">
                 <label for="pagesize">Pagesize</label>
                 <select id="pagesize">
                     <option>10</option>
@@ -88,7 +78,7 @@
                     <option>30</option>
                 </select>
             </td>
-            <td>
+            <td colspan="4">
                 Viewing rows <span class="paging-from">0</span> to <span class="paging-to">0</span> of <span class="paging-total">0</span>
             </td>
         </tr>
@@ -113,8 +103,6 @@
                 <th data-property="Country">Country</th>
                 <th data-property="Email">Email</th>
                 <th data-property="Phone">Phone</th>
-               <!-- <th data-property="Fax">Fax</th>
-                <th data-property="Company">Company</th>-->
             </tr>
         </thead>
         <tbody>
@@ -127,13 +115,15 @@
         <button id="removeCustomer">Remove Customer</button>
         <button id="clearSelection">Clear selection</button>
     </div>
-     <form id="editForm" title="Edit Customer">
+    <form id="editForm" title="Edit Customer">
+        <div id="progressbarEdit"></div>
         <fieldset>
         </fieldset>
         <input type="submit" value="Save changes" />
     </form>
     
     <form id="newForm" title="New Customer">
+        <div id="progressbarNew"></div>
         <fieldset>
         </fieldset>
         <input type="submit" value="Save changes" />
@@ -142,6 +132,7 @@
     <script id="edit-tmpl" type="text/x-jquery-tmpl">
         {{if $.isArray(value)}}
         <label>${label}</label>
+        
         <ul>
             {{each(index, valueX) value}}
             <li><input type="text" class="ui-widget-content ui-corner-all" name="${name}" placeholder="${label}" value="${valueX}" title="${label}" /></li>

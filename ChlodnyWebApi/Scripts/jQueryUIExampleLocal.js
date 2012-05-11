@@ -1,4 +1,5 @@
 ﻿/// <reference path="jquery-1.7.2-vsdoc.js" />
+/// <reference path="jquery-ui-1.8.19.js" />
 var jQueryExample = {}; // holds our functions
 var localCustomers;    // used for the ajax calls and part of the dataview
 var customers;         // used for the data view
@@ -8,7 +9,7 @@ var grid;               // the datagrid
 
 jQueryExample.jQueryWireUp = function () {
     jQueryExample.LoadStyles();
-    
+
     jQueryExample.GetAllCustomer();
     jQueryExample.LoadDataView();
     jQueryExample.LoadDataGrid();
@@ -22,14 +23,33 @@ jQueryExample.jQueryWireUp = function () {
     jQueryExample.NewCustomer();
     jQueryExample.EditCustomer();
     jQueryExample.ClearButton();
+    jQueryExample.AutoLookup();
 };
 
 jQueryExample.LoadStyles = function () {
     $('#switcher').themeswitcher();
-    $('TFOOT > TR > TD').addClass('class123');
-//    $('THEAD > TR > TH').addClass('input123');
-//    $('input:text').width('10').addClass("mod"); ;
+    $('#pager').parent().addClass('pager123');
+    $('#FirstName > input').attr("ID", "FirstNameInput");
+    $('button').button();
+    $('#dialog').dialog({
+        autoOpen: false,
+        modal: true,
+        position: "center",
+        resizable: true,
+        closeOnEscape: true,
+        dialogClass: "ui-state-error",
+        show: "blind",
+        hide: "explode",
+        buttons: {
+            "Sorry": function () {
+                $('#dialog').dialog("close");
+            }
+        }
+    });
+    //    $('THEAD > TR > TH').addClass('input123');
+    //    $('input:text').width('10').addClass("mod"); ;
 };
+
 
 jQueryExample.GetAllCustomer = function() {
     $.ajax({
@@ -101,7 +121,7 @@ jQueryExample.SelectedGridOptions = function() {
 jQueryExample.RemoveButton = function () {
     $("#removeCustomer").click(function () {
         if (!selected.length) {
-            alert("None selected");
+            $('#dialog').html("Cannot remove a customer when none are selected").dialog("option", "title", "Remove: Warning will Robinson!!").dialog("open");
             return;
         }
         var customerId = selected[0].CustomerId;
@@ -125,11 +145,13 @@ jQueryExample.EditCustomer = function() {
     var customer;
     $("#editCustomer").click(function() {
         if (!selected.length) {
-            alert("None selected");
+            $('#dialog').html("Cannot edit a customer when none are selected").dialog("option", "title", "Edit: Warning will Robinson!!").dialog("open");
             return;
         }
         customer = selected[0];
         $("#edit-tmpl").tmpl(meta(customer)).appendTo(editForm.find("fieldset").empty());
+        $("#progressbarEdit").progressbar({ value: 0 });
+        jQueryExample.ProgressFilter("editForm");
         editForm.dialog("open");
     });
     $("[type=submit]").button();
@@ -186,8 +208,69 @@ jQueryExample.EditCustomer = function() {
     });
 };
 
-jQueryExample.NewCustomer = function() {
-    $("#newCustomer").click(function() {
+jQueryExample.ProgressFilter = function(whichForm) {
+    var fields = { };
+    if (whichForm === 'newForm') {
+        $('#newForm').on('change', 'input', function() {
+            var myPer = 0;
+
+            fields = $('#newForm > fieldset > input');
+
+            var progressbarCurrentValue = $("#progressbarNew").progressbar("option", "value");
+            var totalFields = fields.length;
+            if (totalFields !== 0) {
+                var percentage = 100 / totalFields;
+                if (!this.value) {
+                    if (progressbarCurrentValue !== 0) {
+                        myPer = progressbarCurrentValue - percentage;
+                    }
+                } else {
+                    myPer = progressbarCurrentValue + percentage;
+                }
+            }
+
+            $("#progressbarNew")
+                .progressbar({ value: myPer })
+                .children('.ui-progressbar-value')
+                .html(myPer.toPrecision(3) + '%')
+                .css("display", "block");
+        });
+    }
+    if (whichForm === 'editForm') {
+        jQueryExample.editProgressBarCal();
+
+        $('#editForm').on('change', 'input', function() {
+            jQueryExample.editProgressBarCal();
+        });
+    }
+};
+
+jQueryExample.editProgressBarCal = function() {
+    var myPer = 0;
+    var inputsWithValue = 0;
+
+    var fields = $('#editForm > fieldset > input');
+
+    var totalFields = fields.length;
+    var percentage = 100 / totalFields;
+
+    $.each(fields, function () {
+        if (this.value) {
+            inputsWithValue++;
+        }
+    });
+
+    myPer = inputsWithValue * percentage;
+
+    $("#progressbarEdit")
+                .progressbar({ value: myPer })
+                .children('.ui-progressbar-value')
+                .html(myPer.toPrecision(3) + '%')
+                .css("display", "block");
+};
+
+jQueryExample.NewCustomer = function () {
+    $("#newCustomer").click(function () {
         var newCustomer = {
             FirstName: "",
             LastName: "",
@@ -203,6 +286,8 @@ jQueryExample.NewCustomer = function() {
         };
 
         $("#edit-tmpl").tmpl(meta(newCustomer)).appendTo(newForm.find("fieldset").empty());
+        $("#progressbarNew").progressbar({ value: 0 });
+        jQueryExample.ProgressFilter("newForm");
         newForm.dialog("open");
     });
 
@@ -270,4 +355,85 @@ jQueryExample.RefreshButton = function () {
         customers.refresh();
 
     });
+};
+
+jQueryExample.AutoLookup = function () {
+
+    var cities = $.ui.dataview({
+        source: function (request, response) {
+            $.ajax({
+                 //url: "http://ws.geonames.org/searchJSON",
+                url: "http://localhost:60025/api/customer/SearchCustomerFirstName",
+                dataType: "jsonp",
+                type: 'GET', 
+                data: request.filter.term,
+//                data: {
+//                    featureClass: "P",
+//                    style: "full",
+//                    maxRows: 12,
+//                    name_startsWith: request.filter.term
+//                },
+                success: function (data) {
+                    var result = $.map(data, function (item) {
+                        return $.extend({
+                            label: item.FirstName,
+                            value: item.FirstName
+                        }, item);
+                    });
+
+                    response(result, data.totalResultsCount);
+                }
+            });
+        }
+    });
+
+    $("#city").autocomplete({
+        //minLength: 3,
+        source: function (request, response) {
+            cities.option("filter", request).refresh(function () {
+                response(cities.result);
+            });
+        }
+    });
+
+
+
+
+//   $( "#city" ).autocomplete({
+//            source: function( request, response ) {
+//                $.ajax({
+//                    // url: "http://ws.geonames.org/searchJSON",
+//                    url: "http://localhost:60025/api/customer/SearchCustomerFirstName/",
+//                    dataType: "jsonp",
+//                    data: request.term,
+////                    data: {
+////                        featureClass: "P",
+////                        style: "full",
+////                        maxRows: 12,
+////                        name_startsWith: request.term
+////                    },
+//                    success: function( data ) {
+//                        response( $.map( data.geonames, function( item ) {
+//                            return {
+//                                label: item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName,
+//                                value: item.name
+//                            }
+//                        }));
+//                    }
+//                });
+//            },
+//            minLength: 2,
+//            select: function( event, ui ) {
+////                log( ui.item ?
+////                    "Selected: " + ui.item.label :
+////                    "Nothing selected, input was " + this.value);
+//            },
+//            open: function() {
+//                $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+//            },
+//            close: function() {
+//                $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+//            }
+//        });
+ 
 };

@@ -1,11 +1,18 @@
 ﻿namespace ChlodnyWebApi.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using System.Web;
+    using System.Web.Helpers;
     using System.Web.Http;
+    using System.Json;
+    using System.Web.Mvc;
+    using System.Web.Script.Serialization;
+
     using DataAccess;
     using DataAccess.Entities;
 
@@ -17,6 +24,13 @@
         public IQueryable<Customer> GetCustomer()
         {
             return this.contexts1.Customers.Where(c => c.Deleted == false);
+        }
+
+        public IQueryable<Customer> SearchCustomerFirstName(string value)
+        {
+            // contain if you do not care about where the values are
+            // return this.contexts1.Customers.Where(c => c.FirstName.Contains(value) && c.Deleted == false);
+          return this.contexts1.Customers.Where(c => c.FirstName.StartsWith(value) && c.Deleted == false);
         }
 
         public HttpResponseMessage<Customer> GetCustomer(int id)
@@ -33,8 +47,6 @@
 
                 var newMessage = new HttpResponseMessage<Customer>(customer, HttpStatusCode.OK);
                 return newMessage;
-
-                // return this.contexts1.Customers.Where(c => c.CustomerId == id && c.Deleted == false).AsQueryable();
             }
         }
 
