@@ -29,7 +29,12 @@ jQueryExample.jQueryWireUp = function () {
 jQueryExample.LoadStyles = function () {
     $('#switcher').themeswitcher();
     $('#pager').parent().addClass('pager123');
+
     $('#FirstName > input').attr("ID", "FirstNameInput");
+    $('#FirstName').addClass('firstNameInput').change(function() {
+  alert('Handler for .change() called.');
+});
+    
     $('button').button();
     $('#dialog').dialog({
         autoOpen: false,
@@ -46,8 +51,6 @@ jQueryExample.LoadStyles = function () {
             }
         }
     });
-    //    $('THEAD > TR > TH').addClass('input123');
-    //    $('input:text').width('10').addClass("mod"); ;
 };
 
 
@@ -191,10 +194,6 @@ jQueryExample.EditCustomer = function() {
         };
 
         $.ajax({ 
-//                statusCode: {
-//            404: function() {
-//                alert("There was an error Posting");
-//            }
             type: 'Put', 
             dataType: 'json', 
             url: 'http://localhost:60025/api/customer', 
@@ -208,41 +207,49 @@ jQueryExample.EditCustomer = function() {
     });
 };
 
-jQueryExample.ProgressFilter = function(whichForm) {
-    var fields = { };
+jQueryExample.ProgressFilter = function (whichForm) {
     if (whichForm === 'newForm') {
-        $('#newForm').on('change', 'input', function() {
-            var myPer = 0;
+        jQueryExample.newProgressBarCal();
 
-            fields = $('#newForm > fieldset > input');
-
-            var progressbarCurrentValue = $("#progressbarNew").progressbar("option", "value");
-            var totalFields = fields.length;
-            if (totalFields !== 0) {
-                var percentage = 100 / totalFields;
-                if (!this.value) {
-                    if (progressbarCurrentValue !== 0) {
-                        myPer = progressbarCurrentValue - percentage;
-                    }
-                } else {
-                    myPer = progressbarCurrentValue + percentage;
-                }
-            }
-
-            $("#progressbarNew")
-                .progressbar({ value: myPer })
-                .children('.ui-progressbar-value')
-                .html(myPer.toPrecision(3) + '%')
-                .css("display", "block");
+        $('#newForm').on('change', 'input', function () {
+            jQueryExample.newProgressBarCal();
         });
     }
     if (whichForm === 'editForm') {
         jQueryExample.editProgressBarCal();
 
-        $('#editForm').on('change', 'input', function() {
+        $('#editForm').on('change', 'input', function () {
             jQueryExample.editProgressBarCal();
         });
     }
+};
+
+jQueryExample.newProgressBarCal = function () {
+    var myPer = 0;
+    var inputsWithValue = 0;
+
+    var fields = $('#newForm > fieldset > input');
+
+    var totalFields = fields.length;
+
+    if (totalFields > 0) {
+
+        var percentage = 100 / totalFields;
+
+        $.each(fields, function () {
+            if (this.value) {
+                inputsWithValue++;
+            }
+        });
+
+        myPer = inputsWithValue * percentage;
+    }
+
+    $("#progressbarNew")
+        .progressbar({ value: myPer })
+        .children('.ui-progressbar-value')
+        .html(myPer.toPrecision(3) + '%')
+        .css("display", "block");
 };
 
 jQueryExample.editProgressBarCal = function() {
@@ -252,21 +259,25 @@ jQueryExample.editProgressBarCal = function() {
     var fields = $('#editForm > fieldset > input');
 
     var totalFields = fields.length;
-    var percentage = 100 / totalFields;
 
-    $.each(fields, function () {
-        if (this.value) {
-            inputsWithValue++;
-        }
-    });
+    if (totalFields > 0) {
 
-    myPer = inputsWithValue * percentage;
+        var percentage = 100 / totalFields;
 
+        $.each(fields, function() {
+            if (this.value) {
+                inputsWithValue++;
+            }
+        });
+
+        myPer = inputsWithValue * percentage;
+    }
+    
     $("#progressbarEdit")
-                .progressbar({ value: myPer })
-                .children('.ui-progressbar-value')
-                .html(myPer.toPrecision(3) + '%')
-                .css("display", "block");
+        .progressbar({ value: myPer })
+        .children('.ui-progressbar-value')
+        .html(myPer.toPrecision(3) + '%')
+        .css("display", "block");
 };
 
 jQueryExample.NewCustomer = function () {
@@ -359,20 +370,18 @@ jQueryExample.RefreshButton = function () {
 
 jQueryExample.AutoLookup = function () {
 
-    var cities = $.ui.dataview({
+    var firstName = $.ui.dataview({
         source: function (request, response) {
             $.ajax({
-                 //url: "http://ws.geonames.org/searchJSON",
                 url: "http://localhost:60025/api/customer/SearchCustomerFirstName",
                 dataType: "jsonp",
                 type: 'GET', 
-                data: request.filter.term,
-//                data: {
-//                    featureClass: "P",
-//                    style: "full",
-//                    maxRows: 12,
-//                    name_startsWith: request.filter.term
-//                },
+                data: {
+                    WhichSearch: "CustomerFirstName",
+                    SearchType: "startwith", //startwith or contain
+                    MaxRowsReturn: 3,
+                    Term: request.filter.term
+                },
                 success: function (data) {
                     var result = $.map(data, function (item) {
                         return $.extend({
@@ -390,50 +399,9 @@ jQueryExample.AutoLookup = function () {
     $("#city").autocomplete({
         //minLength: 3,
         source: function (request, response) {
-            cities.option("filter", request).refresh(function () {
-                response(cities.result);
+            firstName.option("filter", request).refresh(function () {
+                response(firstName.result);
             });
         }
     });
-
-
-
-
-//   $( "#city" ).autocomplete({
-//            source: function( request, response ) {
-//                $.ajax({
-//                    // url: "http://ws.geonames.org/searchJSON",
-//                    url: "http://localhost:60025/api/customer/SearchCustomerFirstName/",
-//                    dataType: "jsonp",
-//                    data: request.term,
-////                    data: {
-////                        featureClass: "P",
-////                        style: "full",
-////                        maxRows: 12,
-////                        name_startsWith: request.term
-////                    },
-//                    success: function( data ) {
-//                        response( $.map( data.geonames, function( item ) {
-//                            return {
-//                                label: item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName,
-//                                value: item.name
-//                            }
-//                        }));
-//                    }
-//                });
-//            },
-//            minLength: 2,
-//            select: function( event, ui ) {
-////                log( ui.item ?
-////                    "Selected: " + ui.item.label :
-////                    "Nothing selected, input was " + this.value);
-//            },
-//            open: function() {
-//                $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
-//            },
-//            close: function() {
-//                $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
-//            }
-//        });
- 
 };

@@ -60,6 +60,7 @@
     <Compile Include="Entities\Artist.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Employee.cs" />
+    <Compile Include="Entities\Event.cs" />
     <Compile Include="Entities\Genre.cs" />
     <Compile Include="Entities\Invoice.cs" />
     <Compile Include="Entities\InvoiceLine.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Mapping\ArtistMap.cs" />
     <Compile Include="Mapping\CustomerMap.cs" />
     <Compile Include="Mapping\EmployeeMap.cs" />
+    <Compile Include="Mapping\EventMap.cs" />
     <Compile Include="Mapping\GenreMap.cs" />
     <Compile Include="Mapping\InvoiceLineMap.cs" />
     <Compile Include="Mapping\InvoiceMap.cs" />
@@ -85,6 +87,10 @@
     <Compile Include="Migrations\201203272336301_AddDeleted.cs" />
     <Compile Include="Migrations\201203272336301_AddDeleted.Designer.cs">
       <DependentUpon>201203272336301_AddDeleted.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201205120306403_AddEventTable.cs" />
+    <Compile Include="Migrations\201205120306403_AddEventTable.Designer.cs">
+      <DependentUpon>201205120306403_AddEventTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
