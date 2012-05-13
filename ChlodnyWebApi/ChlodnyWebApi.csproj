@@ -137,6 +137,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\SearchValues.cs" />
     <Compile Include="MyJSONPMediaTypeFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaskData.cs" />
@@ -677,6 +678,7 @@
     <Content Include="Scripts\jqueryGrid\ui\jquery.ui.tooltip.js" />
     <Content Include="Scripts\jqueryGrid\ui\jquery.ui.widget.js" />
     <Content Include="Scripts\jQueryUIExampleLocal.js" />
+    <Content Include="Scripts\jQueryUIExampleValidaton.js" />
     <Content Include="Scripts\KendoUIExampleLocal.js" />
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
@@ -711,7 +713,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

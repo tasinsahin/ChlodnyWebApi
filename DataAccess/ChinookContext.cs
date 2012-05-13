@@ -30,6 +30,8 @@ namespace DataAccess
 
         public DbSet<Track> Tracks { get; set; }
 
+        public DbSet<Event> Events { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<IncludeMetadataConvention>();
@@ -44,6 +46,7 @@ namespace DataAccess
             modelBuilder.Configurations.Add(new PlaylistMap());
             modelBuilder.Configurations.Add(new PlaylistTrackMap());
             modelBuilder.Configurations.Add(new TrackMap());
+            modelBuilder.Configurations.Add(new EventMap());
         }
     }
 }

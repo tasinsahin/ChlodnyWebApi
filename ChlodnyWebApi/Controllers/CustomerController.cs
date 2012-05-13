@@ -6,12 +6,9 @@
     using System.Linq;
     using System.Net;
     using System.Net.Http;
-    using System.Web;
-    using System.Web.Helpers;
     using System.Web.Http;
-    using System.Json;
-    using System.Web.Mvc;
-    using System.Web.Script.Serialization;
+
+    using ChlodnyWebApi.Models;
 
     using DataAccess;
     using DataAccess.Entities;
@@ -26,11 +23,18 @@
             return this.contexts1.Customers.Where(c => c.Deleted == false);
         }
 
-        public IQueryable<Customer> SearchCustomerFirstName(string value)
+        public IQueryable<Customer> SearchCustomerFirstName(SearchValues value)
         {
-            // contain if you do not care about where the values are
-            // return this.contexts1.Customers.Where(c => c.FirstName.Contains(value) && c.Deleted == false);
-          return this.contexts1.Customers.Where(c => c.FirstName.StartsWith(value) && c.Deleted == false);
+            if (value.WhichSearch == "CustomerFirstName")
+            {
+                return value.SearchType == "startwith"
+                           ? this.contexts1.Customers.Where(
+                               c => c.FirstName.StartsWith(value.Term) && c.Deleted == false).Take(value.MaxRowsReturn)
+                           : this.contexts1.Customers.Where(c => c.FirstName.Contains(value.Term) && c.Deleted == false)
+                                 .Take(value.MaxRowsReturn);
+            }
+
+            return null;
         }
 
         public HttpResponseMessage<Customer> GetCustomer(int id)
