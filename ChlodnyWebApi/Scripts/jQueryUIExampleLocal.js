@@ -1,5 +1,4 @@
 ﻿/// <reference path="jquery-1.7.2-vsdoc.js" />
-/// <reference path="jquery-ui-1.8.19.js" />
 var jQueryExample = {}; // holds our functions
 var localCustomers;    // used for the ajax calls and part of the dataview
 var customers;         // used for the data view
@@ -30,11 +29,11 @@ jQueryExample.LoadStyles = function () {
     $('#switcher').themeswitcher();
     $('#pager').parent().addClass('pager123');
 
-    $('#FirstName > input').attr("ID", "FirstNameInput");
-    $('#FirstName').addClass('firstNameInput').change(function() {
-  alert('Handler for .change() called.');
-});
-    
+//    $('#FirstName > input').attr("ID", "FirstNameInput");
+//    $('#FirstName').addClass('firstNameInput').change(function() {
+//        alert('Handler for .change() called.');
+//    });
+
     $('button').button();
     $('#dialog').dialog({
         autoOpen: false,
@@ -135,7 +134,6 @@ jQueryExample.RemoveButton = function () {
         customers.refresh();
     });
 };
-
 
 jQueryExample.ClearButton = function () {
     $("#clearSelection").click(function () {
@@ -255,15 +253,10 @@ jQueryExample.newProgressBarCal = function () {
 jQueryExample.editProgressBarCal = function() {
     var myPer = 0;
     var inputsWithValue = 0;
-
     var fields = $('#editForm > fieldset > input');
-
     var totalFields = fields.length;
-
     if (totalFields > 0) {
-
         var percentage = 100 / totalFields;
-
         $.each(fields, function() {
             if (this.value) {
                 inputsWithValue++;
@@ -272,7 +265,7 @@ jQueryExample.editProgressBarCal = function() {
 
         myPer = inputsWithValue * percentage;
     }
-    
+
     $("#progressbarEdit")
         .progressbar({ value: myPer })
         .children('.ui-progressbar-value')
@@ -299,6 +292,8 @@ jQueryExample.NewCustomer = function () {
         $("#edit-tmpl").tmpl(meta(newCustomer)).appendTo(newForm.find("fieldset").empty());
         $("#progressbarNew").progressbar({ value: 0 });
         jQueryExample.ProgressFilter("newForm");
+        window.jQueryExampleValidation.LoadStylesNewForm();
+
         newForm.dialog("open");
     });
 
@@ -308,7 +303,7 @@ jQueryExample.NewCustomer = function () {
         width: 350,
         modal: true
     }).hide().submit(function (event) {
-        event.preventDefault();
+         event.preventDefault();
 
         var firstName = $("#FirstName").val();
         var lastName = $("#LastName").val();
@@ -343,7 +338,7 @@ jQueryExample.NewCustomer = function () {
             }
         });
 
-        newForm.dialog("close");
+
     });
 };
 

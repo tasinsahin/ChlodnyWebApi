@@ -128,6 +128,13 @@ body {
     -moz-border-radius: 5px; -webkit-border-radius: 5px;
 }
 
+#newForm { width: 670px; }
+#newForm label.error {
+    margin-left: 10px;
+    width: auto;
+    display: inline;
+}
+
 
 /* new styles for demo pages, added by Filament 12.29.08
 eventually we should convert the font sizes to ems -- using px for now to minimize style conflicts

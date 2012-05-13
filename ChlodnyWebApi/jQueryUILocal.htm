@@ -35,8 +35,9 @@
     <script src="Scripts/jqueryGrid/helpers.js" type="text/javascript"></script>
     <script src="Scripts/jQueryUIExampleLocal.js" type="text/javascript"></script>
     <script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
-       
-    
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+    <script src="Scripts/jQueryUIExampleValidaton.js" type="text/javascript"></script>
+
 </head>
 <body>
     <div id="switcher"></div>
@@ -117,14 +118,14 @@
         <div id="progressbarEdit"></div>
         <fieldset>
         </fieldset>
-        <input type="submit" value="Save changes" />
+        <input class="submit" type="submit" value="Save changes" />
     </form>
     
     <form id="newForm" title="New Customer">
         <div id="progressbarNew"></div>
         <fieldset>
         </fieldset>
-        <input type="submit" value="Save changes" />
+        <input class="submit" type="submit" value="Save changes" />
     </form>
 
     <script id="edit-tmpl" type="text/x-jquery-tmpl">
