@@ -9,6 +9,8 @@
     <script src="Scripts/jqueryGrid/globalize.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/jquery.tmpl.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/jquery.mousewheel-3.0.4.js" type="text/javascript"></script>
+    
+
     <script src="Scripts/jqueryGrid/ui/jquery.ui.core.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/ui/jquery.ui.widget.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/ui/jquery.ui.button.js" type="text/javascript"></script>
@@ -25,6 +27,9 @@
     <script src="Scripts/jqueryGrid/ui/jquery.ui.autocomplete.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/ui/jquery.ui.progressbar.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/ui/jquery.ui.grid.js" type="text/javascript"></script>
+    
+    
+
     <script src="Scripts/jqueryGrid/dataview-odata.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/pager.js" type="text/javascript"></script>
     <script src="Scripts/jqueryGrid/grid-filter.js" type="text/javascript"></script>
@@ -36,11 +41,15 @@
     <script src="Scripts/jQueryUIExampleLocal.js" type="text/javascript"></script>
     <script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
     <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
-    <script src="Scripts/jQueryUIExampleValidaton.js" type="text/javascript"></script>
+    
+    
+    
 
+    <script src="Scripts/jQueryUIExampleValidaton.js" type="text/javascript"></script>
+    <script src="Scripts/jsrender.js" type="text/javascript"></script>
 </head>
 <body>
-    <div id="switcher"></div>
+    <!--<div id="switcher"></div>-->
     <input id="city"/>
     <div id="dialog"><textarea id="messageDialog"></textarea></div>
 <h2>jQuery UI Grid</h2>
@@ -50,7 +59,7 @@
     <thead>
         <tr>
             <th data-property="CustomerId">ID</th>
-            <th id="FirstName" data-property="FirstName">First Name</th>
+            <th data-property="FirstName">First Name</th>
             <th data-property="LastName">Last Name</th>
             <th data-property="Address">Address</th>
             <th data-property="City">City</th>
@@ -116,20 +125,22 @@
     </div>
     <form id="editForm" title="Edit Customer">
         <div id="progressbarEdit"></div>
-        <fieldset>
+        <fieldset id="editFormFields">
+            <legend>Edit Customer</legend>
         </fieldset>
         <input class="submit" type="submit" value="Save changes" />
     </form>
     
     <form id="newForm" title="New Customer">
         <div id="progressbarNew"></div>
-        <fieldset>
+        <fieldset id="newFormFields">
+            <legend>New Customer</legend>
         </fieldset>
         <input class="submit" type="submit" value="Save changes" />
     </form>
 
     <script id="edit-tmpl" type="text/x-jquery-tmpl">
-        {{if $.isArray(value)}}
+     {{if $.isArray(value)}}
         <label>${label}</label>
         
         <ul>

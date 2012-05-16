@@ -26,7 +26,7 @@ jQueryExample.jQueryWireUp = function () {
 };
 
 jQueryExample.LoadStyles = function () {
-    $('#switcher').themeswitcher();
+//    $('#switcher').themeswitcher();
     $('#pager').parent().addClass('pager123');
 
 //    $('#FirstName > input').attr("ID", "FirstNameInput");
@@ -142,9 +142,9 @@ jQueryExample.ClearButton = function () {
     });
 };
 
-jQueryExample.EditCustomer = function() {
+jQueryExample.EditCustomer = function () {
     var customer;
-    $("#editCustomer").click(function() {
+    $("#editCustomer").click(function () {
         if (!selected.length) {
             $('#dialog').html("Cannot edit a customer when none are selected").dialog("option", "title", "Edit: Warning will Robinson!!").dialog("open");
             return;
@@ -160,21 +160,21 @@ jQueryExample.EditCustomer = function() {
         autoOpen: false,
         width: 350,
         modal: true
-    }).hide().submit(function(event) {
+    }).hide().submit(function (event) {
         event.preventDefault();
 
-        var customerId = $("#CustomerId").val();
-        var firstName = $("#FirstName").val();
-        var lastName = $("#LastName").val();
-        var address = $("#Address").val();
-        var city = $("#City").val();
-        var postalCode = $("#PostalCode").val();
-        var state = $("#State").val();
-        var country = $("#Country").val();
-        var email = $("#Email").val();
-        var phone = $("#Phone").val();
-        var fax = $("#Fax").val();
-        var company = $("#Company").val();
+        var customerId = $("#editFormFields > #CustomerId").val();
+        var firstName = $("#editFormFields > #FirstName").val();
+        var lastName = $("#editFormFields > #LastName").val();
+        var address = $("#editFormFields > #Address").val();
+        var city = $("#editFormFields > #City").val();
+        var postalCode = $("#editFormFields > #PostalCode").val();
+        var state = $("#editFormFields > #State").val();
+        var country = $("#editFormFields > #Country").val();
+        var email = $("#editFormFields > #Email").val();
+        var phone = $("#editFormFields > #Phone").val();
+        var fax = $("#editFormFields > #Fax").val();
+        var company = $("#editFormFields > #Company").val();
 
         var sentData = {
             CustomerId: customerId,
@@ -191,16 +191,17 @@ jQueryExample.EditCustomer = function() {
             Company: company
         };
 
-        $.ajax({ 
-            type: 'Put', 
-            dataType: 'json', 
-            url: 'http://localhost:60025/api/customer', 
-            data: sentData }
-        
+        $.ajax({
+            type: 'Put',
+            dataType: 'json',
+            url: 'http://localhost:60025/api/customer',
+            data: sentData
+        }
+
     );
         $.observable(customer, localCustomers).property(serializeForm(this));
         customers.refresh();
-        // TODO hide tooltip
+        jQueryExampleValidation.LoadStylesEditForm();
         editForm.dialog("close");
     });
 };
@@ -289,11 +290,11 @@ jQueryExample.NewCustomer = function () {
             Company: ""
         };
 
+       // $("#newFormFields").html($("#edit-tmpl").render(newCustomer));
         $("#edit-tmpl").tmpl(meta(newCustomer)).appendTo(newForm.find("fieldset").empty());
         $("#progressbarNew").progressbar({ value: 0 });
         jQueryExample.ProgressFilter("newForm");
         window.jQueryExampleValidation.LoadStylesNewForm();
-
         newForm.dialog("open");
     });
 
@@ -303,19 +304,19 @@ jQueryExample.NewCustomer = function () {
         width: 350,
         modal: true
     }).hide().submit(function (event) {
-         event.preventDefault();
+        event.preventDefault();
 
-        var firstName = $("#FirstName").val();
-        var lastName = $("#LastName").val();
-        var address = $("#Address").val();
-        var city = $("#City").val();
-        var postalCode = $("#PostalCode").val();
-        var state = $("#State").val();
-        var country = $("#Country").val();
-        var email = $("#Email").val();
-        var phone = $("#Phone").val();
-        var fax = $("#Fax").val();
-        var company = $("#Company").val();
+        var firstName = $("#newFormFields > #FirstName").val();
+        var lastName = $("#newFormFields > #LastName").val();
+        var address = $("#newFormFields > #Address").val();
+        var city = $("#newFormFields > #City").val();
+        var postalCode = $("#newFormFields > #PostalCode").val();
+        var state = $("#newFormFields > #State").val();
+        var country = $("#newFormFields > #Country").val();
+        var email = $("#newFormFields > #Email").val();
+        var phone = $("#newFormFields > #Phone").val();
+        var fax = $("#newFormFields > #Fax").val();
+        var company = $("#newFormFields > #Company").val();
 
         var sentData = {
             FirstName: firstName,
@@ -369,7 +370,7 @@ jQueryExample.AutoLookup = function () {
         source: function (request, response) {
             $.ajax({
                 url: "http://localhost:60025/api/customer/SearchCustomerFirstName",
-                dataType: "jsonp",
+                dataType: "json",
                 type: 'GET', 
                 data: {
                     WhichSearch: "CustomerFirstName",
@@ -392,6 +393,15 @@ jQueryExample.AutoLookup = function () {
     });
 
     $("#city").autocomplete({
+        //minLength: 3,
+        source: function (request, response) {
+            firstName.option("filter", request).refresh(function () {
+                response(firstName.result);
+            });
+        }
+    });
+
+    $("#FirstName").autocomplete({
         //minLength: 3,
         source: function (request, response) {
             firstName.option("filter", request).refresh(function () {

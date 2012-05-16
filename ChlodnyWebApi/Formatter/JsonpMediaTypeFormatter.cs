@@ -63,6 +63,7 @@ namespace ChlodnyWebApi.Formatter
                         });
             }
 
+            // return base.OnWriteToStreamAsync(type, value, stream, contentHeaders, formatterContext, transportContext);
             return base.OnWriteToStreamAsync(
                 type, value, stream, contentHeaders, formatterContext, transportContext);
         }
