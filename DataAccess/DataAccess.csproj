@@ -92,6 +92,14 @@
     <Compile Include="Migrations\201205120306403_AddEventTable.Designer.cs">
       <DependentUpon>201205120306403_AddEventTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201205141554377_Event Table change.cs" />
+    <Compile Include="Migrations\201205141554377_Event Table change.Designer.cs">
+      <DependentUpon>201205141554377_Event Table change.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201205150127212_added allday to event.cs" />
+    <Compile Include="Migrations\201205150127212_added allday to event.Designer.cs">
+      <DependentUpon>201205150127212_added allday to event.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
