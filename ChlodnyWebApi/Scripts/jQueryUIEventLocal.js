@@ -11,7 +11,7 @@ Event.WireUp = function () {
     $('button').button();
     $('#startDate').datepicker();
     $('#endDate').datepicker();
-
+    $('#switcher1').themeswitcher();
 };
 
 
@@ -116,7 +116,8 @@ Event.BindSlider = function () {
         max: 200,
         step: 10,
         slide: function (event, ui) {
-            $('#calcontainer').css('zoom', ui.value + '%');
+            //$('#calendar').css('zoom', ui.value + '%');
+            $('#calendar').css("font-size", ui.value + '%');
         }
     });
 };
