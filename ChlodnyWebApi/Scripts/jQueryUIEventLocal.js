@@ -35,7 +35,10 @@ Event.GetAllEvents = function() {
         async: false,
         success: function(result) {
             Event.EventValue = result;
-        }
+        },
+        error: function(result){
+            alert(result);
+    }
     });
 };
 

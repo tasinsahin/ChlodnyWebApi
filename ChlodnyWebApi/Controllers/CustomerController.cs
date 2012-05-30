@@ -20,7 +20,8 @@
         // Retrieve = GET
         public IQueryable<Customer> GetCustomer()
         {
-            return this.contexts1.Customers.Where(c => c.Deleted == false);
+            return this.contexts1.Customers;
+            //.Where(c => c.Deleted == false);
         }
 
         public IQueryable<Customer> SearchCustomerFirstName(SearchValues value)

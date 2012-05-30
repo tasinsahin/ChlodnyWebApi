@@ -1,4 +1,7 @@
-﻿namespace ChlodnyWebApi.Controllers
+﻿using System.Net;
+using System.Net.Http;
+
+namespace ChlodnyWebApi.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -9,12 +12,15 @@
 
     public class EventController : ApiController
     {
-        private readonly ChinookContext contexts1 = new ChinookContext();
+        private readonly ChinookContext contextsEvents = new ChinookContext();
 
         // GET /api/event
-        public IQueryable<Event> Get()
+        public IEnumerable<Event> Get()
         {
-            return this.contexts1.Events;
+            var events = contextsEvents.Events;
+            return events;
+
+            //return this.contexts1.Events;
         }
 
         // GET /api/event/5

@@ -138,6 +138,22 @@
         </fieldset>
         <input class="submit" type="submit" value="Save changes" />
     </form>
+    
+    <script id="customerContact" type="text/x-jsrender">
+       {{if $.isArray(value)}}
+        <label>${label}</label>
+        
+        <ul>
+            {{each(index, valueX) value}}
+            <li><input type="text" class="ui-widget-content ui-corner-all" name="${name}" placeholder="${label}" value="${valueX}" title="${label}" /></li>
+            {{/each}}
+        </ul>
+        {{else}}
+        <label for="${name}">${label}</label>
+        <input type="text" class="ui-widget-content ui-corner-all" id="${name}" name="${name}" placeholder="${label}" value="${value}" title="${label}" />
+        {{/if}}
+    </script>
+
 
     <script id="edit-tmpl" type="text/x-jquery-tmpl">
      {{if $.isArray(value)}}

@@ -48,6 +48,8 @@
             // this addes jsonp support formatter
           //  GlobalConfiguration.Configuration.Formatters.Clear();
           //  GlobalConfiguration.Configuration.Formatters.Add(new JsonpMediaTypeFormatter());
+            // WebApi Configuration to hook up formatters and message handlers
+            RegisterApis(GlobalConfiguration.Configuration);
         }
 
         protected void Application_Start()
@@ -63,6 +65,13 @@
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
             BundleTable.Bundles.RegisterTemplateBundles();
+        }
+
+        public static void RegisterApis(HttpConfiguration config)
+        {
+            // Pulled from http://www.matlus.com/jsonpmediatypeformatter-web-api-jsonp/
+            // Add JsonMediaTypeFormatter to handle for jsonp
+            config.Formatters.Insert(0, new JsonpMediaTypeFormatter());
         }
     }
 }
