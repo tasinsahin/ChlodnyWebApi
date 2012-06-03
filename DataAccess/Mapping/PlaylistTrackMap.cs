@@ -1,9 +1,5 @@
-using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using System.Data.Common;
-using System.Data.Entity;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using DataAccess.Entities;
 
 namespace DataAccess.Mapping
@@ -13,19 +9,19 @@ namespace DataAccess.Mapping
 		public PlaylistTrackMap()
 		{
 			// Primary Key
-			this.HasKey(t => new { t.PlaylistId, t.TrackId });
+			HasKey(t => new { t.PlaylistId, t.TrackId });
 
 			// Properties
-			this.Property(t => t.PlaylistId)
+			Property(t => t.PlaylistId)
 				.HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 				
-			this.Property(t => t.TrackId)
+			Property(t => t.TrackId)
 				.HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 				
 			// Table & Column Mappings
-			this.ToTable("PlaylistTrack");
-			this.Property(t => t.PlaylistId).HasColumnName("PlaylistId");
-			this.Property(t => t.TrackId).HasColumnName("TrackId");
+			ToTable("PlaylistTrack");
+			Property(t => t.PlaylistId).HasColumnName("PlaylistId");
+			Property(t => t.TrackId).HasColumnName("TrackId");
 		}
 	}
 }

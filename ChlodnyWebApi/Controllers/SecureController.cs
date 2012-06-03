@@ -11,7 +11,10 @@ namespace ChlodnyWebApi.Controllers
         [Authorize]
         public string Get()
         {
-            return this.Request.GetUserPrincipal().Identity.Name;
+            return System.Threading.Thread.CurrentPrincipal.Identity.Name;
+            
+            // GetUserPrincipal no longer used
+            // return this.Request.GetUserPrincipal().Identity.Name;
 
             // return new string[] { "value1", "value2" };
         }

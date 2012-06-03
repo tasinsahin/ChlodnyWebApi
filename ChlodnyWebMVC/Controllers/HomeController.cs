@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace ChlodnyWebMVC.Controllers
 {
-    using System.Json;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-
-    using DataAccess.Entities;
-
     public class HomeController : Controller
     {
         public ActionResult Index()

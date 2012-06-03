@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 11
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{41237CCB-C850-4498-B016-4EED4CFF99DE}"
 	ProjectSection(SolutionItems) = preProject
 		Chinook_SqlServer_AutoIncrementPKs.sql = Chinook_SqlServer_AutoIncrementPKs.sql
