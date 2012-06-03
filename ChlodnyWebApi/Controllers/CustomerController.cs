@@ -46,19 +46,8 @@
             {
                 var request = (from i in context.Customers where i.CustomerId == id where i.Deleted == false select i).FirstOrDefault();
 
-                if (request == null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound);
-                    //var notfoundMessage = new HttpResponseMessage<Customer>(HttpStatusCode.NotFound);
-                    //return notfoundMessage;
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, request);
-
-                //var newMessage = new HttpResponseMessage<Customer>(customer, HttpStatusCode.OK);
-                //return newMessage;
+                return request == null ? Request.CreateResponse(HttpStatusCode.NotFound) : Request.CreateResponse(HttpStatusCode.OK, request);
             }
-           // return Request;
         }
 
         // public HttpResponseMessage<Customer> DeleteCustomer(int id)
@@ -66,7 +55,6 @@
         // Delete = DELETE
         public HttpResponseMessage DeleteCustomer(int id)
         {
-           // HttpResponseMessage<Customer> response;
             using (var context = new ChinookContext())
             {
                 var request = context.Customers.Single(c => c.CustomerId == id && c.Deleted == false);
@@ -76,13 +64,9 @@
                     request.Deleted = true;
                     context.SaveChanges();
                     return Request.CreateResponse(HttpStatusCode.Accepted, request);
-                    //response = new HttpResponseMessage<Customer>(HttpStatusCode.Accepted);
                 }
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-                // response = new HttpResponseMessage<Customer>(HttpStatusCode.NotFound);
             }
-
-           // return Request;
         }
 
         // public HttpResponseMessage<Customer> PostCustomer(Customer customer)
@@ -103,15 +87,10 @@
                 {
                     context.Customers.Add(customer);
                     context.SaveChanges();
-                    // var newMessage = new HttpResponseMessage<Customer>(customer, HttpStatusCode.Created);
 
                     var response = Request.CreateResponse(HttpStatusCode.Created, customer);
                     response.Headers.Location = new Uri(Request.RequestUri, string.Format("Customer/{0}", customer.CustomerId));
                     return response;
-                    
-                    //newMessage.Headers.Location = new Uri(
-                    //    Request.RequestUri, "/Customer/" + customer.CustomerId.ToString(CultureInfo.InvariantCulture));
-                    //return newMessage;
                 }
 
                 return this.PutCustomer(customer);
@@ -154,12 +133,6 @@
                 var response = Request.CreateResponse(HttpStatusCode.Accepted, customer);
                 response.Headers.Location = new Uri(Request.RequestUri, string.Format("Customer/{0}", customer.CustomerId));
                 return response;
-
-                //var newMessage = new HttpResponseMessage<Customer>(customer, HttpStatusCode.Accepted);
-
-                //newMessage.Headers.Location = new Uri(
-                //    Request.RequestUri, "/Customer/" + customer.CustomerId.ToString(CultureInfo.InvariantCulture));
-                //return newMessage;
             }
         }
     }
