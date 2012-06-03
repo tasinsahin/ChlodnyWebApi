@@ -36,7 +36,7 @@ namespace DataAccess
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<IncludeMetadataConvention>();
+            //modelBuilder.Conventions.Remove<IncludeMetadataConvention>();
             modelBuilder.Configurations.Add(new AlbumMap());
             modelBuilder.Configurations.Add(new ArtistMap());
             modelBuilder.Configurations.Add(new CustomerMap());

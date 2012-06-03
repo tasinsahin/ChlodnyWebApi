@@ -6,7 +6,7 @@
     using System.Web.Optimization;
     using System.Web.Routing;
 
-    using ChlodnyWebApi.Formatter;
+   // using ChlodnyWebApi.Formatter;
 
     using DataAccess;
 
@@ -64,14 +64,15 @@
             AreaRegistration.RegisterAllAreas();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-            BundleTable.Bundles.RegisterTemplateBundles();
+          //  BundleTable.Bundles.RegisterTemplateBundles();
+            BundleTable.Bundles.EnableDefaultBundles();
         }
 
         public static void RegisterApis(HttpConfiguration config)
         {
             // Pulled from http://www.matlus.com/jsonpmediatypeformatter-web-api-jsonp/
             // Add JsonMediaTypeFormatter to handle for jsonp
-            config.Formatters.Insert(0, new JsonpMediaTypeFormatter());
+         //   config.Formatters.Insert(0, new JsonpMediaTypeFormatter());
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace ChlodnyWebApi.Controllers
+﻿using System.Net;
+
+namespace ChlodnyWebApi.Controllers
 {
     using System.Collections.Generic;
     using System.Globalization;
@@ -9,19 +11,23 @@
     // setting up for JSONP Demo
     public class ValuesController : ApiController
     {
+        //public HttpResponseMessage<JsonPReturn> Get(int id, string callback)
+        // Changed for Web Api RC
         // GET /api/values/5
-        public HttpResponseMessage<JsonPReturn> Get(int id, string callback)
+        public HttpResponseMessage Get(int id, string callback)
         {
-            var ret =
-                new HttpResponseMessage<JsonPReturn>(
-                    new JsonPReturn
-                        {
-                            CallbackName = callback,
-                            Json = "{'id':'" + id.ToString(CultureInfo.InvariantCulture) + "','data':'Hello JSONP'}"
-                        });
+            return Request.CreateResponse(HttpStatusCode.Created, "{'id':'" + id.ToString(CultureInfo.InvariantCulture) + "','data':'Hello JSONP'}");
 
-            ret.Content.Headers.ContentType = new MediaTypeHeaderValue("application/javascript");
-            return ret;
+            //var ret =
+            //    new HttpResponseMessage<JsonPReturn>(
+            //        new JsonPReturn
+            //            {
+            //                CallbackName = callback,
+            //                Json = "{'id':'" + id.ToString(CultureInfo.InvariantCulture) + "','data':'Hello JSONP'}"
+            //            });
+
+            //ret.Content.Headers.ContentType = new MediaTypeHeaderValue("application/javascript");
+            //return ret;
         }
 
         public class JsonPReturn
