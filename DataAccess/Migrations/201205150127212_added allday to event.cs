@@ -6,12 +6,12 @@ namespace DataAccess.Migrations
     {
         public override void Up()
         {
-            AddColumn("Events", "AllDay", c => c.Boolean(nullable: false));
+         //   AddColumn("Events", "AllDay", c => c.Boolean(nullable: false));
         }
         
         public override void Down()
         {
-            DropColumn("Events", "AllDay");
+         //   DropColumn("Events", "AllDay");
         }
     }
 }

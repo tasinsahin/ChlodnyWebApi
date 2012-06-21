@@ -6,14 +6,14 @@ namespace DataAccess.Migrations
     {
         public override void Up()
         {
-            AlterColumn("Events", "StartDate", c => c.DateTime(nullable: false));
-            AlterColumn("Events", "EndDate", c => c.DateTime(nullable: false));
+          //  AlterColumn("Events", "StartDate", c => c.DateTime(nullable: false));
+//            AlterColumn("Events", "EndDate", c => c.DateTime(nullable: false));
         }
         
         public override void Down()
         {
-            AlterColumn("Events", "EndDate", c => c.DateTime());
-            AlterColumn("Events", "StartDate", c => c.DateTime());
+  //          AlterColumn("Events", "EndDate", c => c.DateTime());
+    //        AlterColumn("Events", "StartDate", c => c.DateTime());
         }
     }
 }
