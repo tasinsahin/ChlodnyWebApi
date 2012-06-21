@@ -6,7 +6,10 @@ namespace ChlodnyWebApi.Controllers
     using System.Globalization;
     using System.Net.Http;
     using System.Net.Http.Headers;
+    using System.Web;
     using System.Web.Http;
+
+    using ChlodnyWebApi.Models;
 
     // setting up for JSONP Demo
     public class ValuesController : ApiController
@@ -14,9 +17,22 @@ namespace ChlodnyWebApi.Controllers
         //public HttpResponseMessage<JsonPReturn> Get(int id, string callback)
         // Changed for Web Api RC
         // GET /api/values/5
-        public HttpResponseMessage Get(int id, string callback)
+        public string Get()
         {
-            return Request.CreateResponse(HttpStatusCode.Created, "{'id':'" + id.ToString(CultureInfo.InvariantCulture) + "','data':'Hello JSONP'}");
+            var _response = new JsonResponseMessage();
+        var jSearializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+            _response.IsSucess = true;
+            _response.Message = string.Empty;
+            _response.CallBack = string.Empty;
+            _response.ResponseData = "This is a test";
+
+
+
+
+
+            //context.Response.Write(jSearializer.Serialize(_response));
+            // return Request.CreateResponse(HttpStatusCode.Created, "{'id':'" + id.ToString(CultureInfo.InvariantCulture) + "','data':'Hello JSONP'}");
 
             //var ret =
             //    new HttpResponseMessage<JsonPReturn>(
@@ -28,6 +44,7 @@ namespace ChlodnyWebApi.Controllers
 
             //ret.Content.Headers.ContentType = new MediaTypeHeaderValue("application/javascript");
             //return ret;
+            return jSearializer.Serialize(_response);
         }
 
         public class JsonPReturn

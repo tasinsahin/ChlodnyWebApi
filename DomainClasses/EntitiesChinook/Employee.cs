@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
-
-namespace DataAccess.Entities
+namespace DomainClasses.EntitiesChinook
 {
-	public class Employee
+    using System;
+
+    public class Employee
 	{
 		public int EmployeeId { get; set; }
 		public string LastName { get; set; }

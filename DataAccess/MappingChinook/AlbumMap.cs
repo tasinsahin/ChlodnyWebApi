@@ -1,8 +1,8 @@
-namespace DataAccess.Mapping
+namespace DataAccess.MappingChinook
 {
     using System.Data.Entity.ModelConfiguration;
 
-    using DataAccess.Entities;
+    using DomainClasses.EntitiesChinook;
 
     public class AlbumMap : EntityTypeConfiguration<Album>
     {
@@ -22,4 +22,3 @@ namespace DataAccess.Mapping
         }
     }
 }
-

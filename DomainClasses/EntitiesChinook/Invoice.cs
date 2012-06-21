@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-
-namespace DataAccess.Entities
+namespace DomainClasses.EntitiesChinook
 {
-	public class Invoice
+    public class Invoice
 	{
 		public int InvoiceId { get; set; }
 		public int CustomerId { get; set; }

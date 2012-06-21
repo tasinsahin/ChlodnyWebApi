@@ -2,11 +2,9 @@ namespace DataAccess
 {
     using System;
     using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Validation;
-
-    using DataAccess.Entities;
-    using DataAccess.Mapping;
+    using DataAccess.MappingChinook;
+    using DomainClasses.EntitiesChinook;
 
     public class ChinookContext : DbContext
     {
@@ -36,7 +34,6 @@ namespace DataAccess
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //modelBuilder.Conventions.Remove<IncludeMetadataConvention>();
             modelBuilder.Configurations.Add(new AlbumMap());
             modelBuilder.Configurations.Add(new ArtistMap());
             modelBuilder.Configurations.Add(new CustomerMap());

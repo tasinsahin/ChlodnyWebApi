@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChlodnyWebMVC", "ChlodnyWebMVC\ChlodnyWebMVC.csproj", "{AD939D83-5D72-4B91-BAAA-349DF37E40E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainClasses", "DomainClasses\DomainClasses.csproj", "{D5778DB1-2BCC-46F2-9C65-FFEDA6000D32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{CF98DA63-621C-4549-8761-E0C95B3BDC9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF98DA63-621C-4549-8761-E0C95B3BDC9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF98DA63-621C-4549-8761-E0C95B3BDC9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5778DB1-2BCC-46F2-9C65-FFEDA6000D32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5778DB1-2BCC-46F2-9C65-FFEDA6000D32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5778DB1-2BCC-46F2-9C65-FFEDA6000D32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5778DB1-2BCC-46F2-9C65-FFEDA6000D32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

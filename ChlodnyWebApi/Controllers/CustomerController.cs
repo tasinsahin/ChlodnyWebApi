@@ -7,10 +7,10 @@
     using System.Net.Http;
     using System.Web.Http;
 
-    using Models;
+    using ChlodnyWebApi.Models;
 
     using DataAccess;
-    using DataAccess.Entities;
+    using DomainClasses.EntitiesChinook;
 
     public class CustomerController : ApiController
     {
