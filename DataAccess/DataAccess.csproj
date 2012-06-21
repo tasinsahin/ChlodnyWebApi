@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DataAccess</RootNamespace>
     <AssemblyName>DataAccess</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>
@@ -22,6 +22,7 @@
     </SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,6 +32,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -39,6 +41,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -46,7 +49,6 @@
       <HintPath>..\packages\EntityFramework.5.0.0-rc\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
@@ -57,30 +59,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChinookContext.cs" />
-    <Compile Include="Entities\Album.cs" />
-    <Compile Include="Entities\Artist.cs" />
-    <Compile Include="Entities\Customer.cs" />
-    <Compile Include="Entities\Employee.cs" />
-    <Compile Include="Entities\Event.cs" />
-    <Compile Include="Entities\Genre.cs" />
-    <Compile Include="Entities\Invoice.cs" />
-    <Compile Include="Entities\InvoiceLine.cs" />
-    <Compile Include="Entities\MediaType.cs" />
-    <Compile Include="Entities\Playlist.cs" />
-    <Compile Include="Entities\PlaylistTrack.cs" />
-    <Compile Include="Entities\Track.cs" />
-    <Compile Include="Mapping\AlbumMap.cs" />
-    <Compile Include="Mapping\ArtistMap.cs" />
-    <Compile Include="Mapping\CustomerMap.cs" />
-    <Compile Include="Mapping\EmployeeMap.cs" />
-    <Compile Include="Mapping\EventMap.cs" />
-    <Compile Include="Mapping\GenreMap.cs" />
-    <Compile Include="Mapping\InvoiceLineMap.cs" />
-    <Compile Include="Mapping\InvoiceMap.cs" />
-    <Compile Include="Mapping\MediaTypeMap.cs" />
-    <Compile Include="Mapping\PlaylistMap.cs" />
-    <Compile Include="Mapping\PlaylistTrackMap.cs" />
-    <Compile Include="Mapping\TrackMap.cs" />
+    <Compile Include="MappingChinook\AlbumMap.cs" />
+    <Compile Include="MappingChinook\ArtistMap.cs" />
+    <Compile Include="MappingChinook\CustomerMap.cs" />
+    <Compile Include="MappingChinook\EmployeeMap.cs" />
+    <Compile Include="MappingChinook\EventMap.cs" />
+    <Compile Include="MappingChinook\GenreMap.cs" />
+    <Compile Include="MappingChinook\InvoiceLineMap.cs" />
+    <Compile Include="MappingChinook\InvoiceMap.cs" />
+    <Compile Include="MappingChinook\MediaTypeMap.cs" />
+    <Compile Include="MappingChinook\PlaylistMap.cs" />
+    <Compile Include="MappingChinook\PlaylistTrackMap.cs" />
+    <Compile Include="MappingChinook\TrackMap.cs" />
     <Compile Include="Migrations\201203272330566_Initial.cs" />
     <Compile Include="Migrations\201203272330566_Initial.Designer.cs">
       <DependentUpon>201203272330566_Initial.cs</DependentUpon>
@@ -110,6 +100,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Scripts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DomainClasses\DomainClasses.csproj">
+      <Project>{d5778db1-2bcc-46f2-9c65-ffeda6000d32}</Project>
+      <Name>DomainClasses</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

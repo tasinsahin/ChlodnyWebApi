@@ -1,4 +1,4 @@
-﻿namespace DataAccess.Entities
+﻿namespace DomainClasses.EntitiesChinook
 {
     using System;
 

@@ -72,6 +72,54 @@
 //    
 
 
+/* ******************************************************************************************************** */
+KendoExampleCross.DoAjaxCall = function (parameter, datatype, data) {
+    jQuery.ajax({
+        type: 'POST',
+        url: "http://localhost:60025/api/customer" + parameter,
+        data: data,
+        dataType: datatype,
+        success: function (data, textStatus) {
+            try {
+                var jsonData = eval(data);
+                if (jsonData.IsSucess) {
+                    eval(jsonData.CallBack + '(jsonData.ResponseData, jsonData.Message)');
+                } else {
+                    alert(jsonData.Message + jsonData.IsSucess);
+                }
+            } catch (err) {
+                alert(err);
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert("Error:" + errorThrown + " and " + jqXHR + " and " + textStatus);
+        }
+    });
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ******************************************************************************************************** */
+
+
 KendoExampleCross.KendoWireUp = function () {
     var grid = $("#grid").data("kendoGrid");
     // Inital load the grid with all customer Id's

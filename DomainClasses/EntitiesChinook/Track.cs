@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
-
-namespace DataAccess.Entities
+namespace DomainClasses.EntitiesChinook
 {
-	public class Track
+    using System;
+
+    public class Track
 	{
 		public int TrackId { get; set; }
 		public string Name { get; set; }

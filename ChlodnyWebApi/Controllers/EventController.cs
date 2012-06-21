@@ -4,11 +4,9 @@ using System.Net.Http;
 namespace ChlodnyWebApi.Controllers
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Http;
-
     using DataAccess;
-    using DataAccess.Entities;
+    using DomainClasses.EntitiesChinook;
 
     public class EventController : ApiController
     {
