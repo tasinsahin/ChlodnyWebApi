@@ -7,6 +7,7 @@
     using System.Net.Http;
     using System.Web.Http;
 
+    using ChlodnyWebApi.BingMaps;
     using ChlodnyWebApi.Models;
 
     using DataAccess;
@@ -15,10 +16,12 @@
     public class CustomerController : ApiController
     {
         private readonly ChinookContext contexts1 = new ChinookContext();
+        private readonly BingMapsRest bingMapsRest = new BingMapsRest();
 
         // Retrieve = GET
         public IQueryable<Customer> GetCustomer()
         {
+            bingMapsRest.GetLocationByAddress();
             return this.contexts1.Customers;
             //.Where(c => c.Deleted == false);
         }
