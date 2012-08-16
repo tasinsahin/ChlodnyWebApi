@@ -72,6 +72,7 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PostSharp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -143,9 +144,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BingMaps\BingMapsRest.cs" />
-    <Compile Include="BingMaps\GeoLocation.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SecureController.cs" />
@@ -155,15 +155,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DashboardRepository.cs" />
     <Compile Include="Models\JsonResponseMessage.cs" />
     <Compile Include="Models\SearchValues.cs" />
     <Compile Include="MyJSONPMediaTypeFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\GeocodeService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="TaskData.cs" />
     <Compile Include="WebServices\ArtistHandler.ashx.cs">
       <DependentUpon>ArtistHandler.ashx</DependentUpon>
@@ -767,13 +763,9 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\knockout.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <Content Include="Service References\GeocodeService\configuration91.svcinfo" />
-    <Content Include="Service References\GeocodeService\configuration.svcinfo" />
-    <Content Include="Service References\GeocodeService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -808,6 +800,14 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Aspects\Aspects.csproj">
+      <Project>{f1e65c6a-38b3-4b3d-b459-b18fbaf462ed}</Project>
+      <Name>Aspects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BingServices\BingServices.csproj">
+      <Project>{5bc9fb49-80f6-4812-af5e-6aafd7661807}</Project>
+      <Name>BingServices</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">
       <Project>{CAF7003D-91F3-46AF-B5A3-8CC030906BFE}</Project>
       <Name>DataAccess</Name>
@@ -824,26 +824,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\GeocodeService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Service References\GeocodeService\Arrays.xsd">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Service References\GeocodeService\common.xsd">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Service References\GeocodeService\contracts.wsdl" />
-    <Content Include="Service References\GeocodeService\contracts.xsd">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Service References\GeocodeService\geocode.wsdl" />
-    <Content Include="Service References\GeocodeService\geocode.xsd">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Service References\GeocodeService\service.xsd">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Views\Dashboard\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

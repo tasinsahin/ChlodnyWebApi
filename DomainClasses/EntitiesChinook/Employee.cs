@@ -1,6 +1,7 @@
 namespace DomainClasses.EntitiesChinook
 {
     using System;
+    using System.Data.Spatial;
 
     public class Employee
     {
@@ -33,5 +34,11 @@ namespace DomainClasses.EntitiesChinook
         public string Fax { get; set; }
 
         public string Email { get; set; }
+
+        public DbGeography GeoLoc { get; set; }
+
+        public float? Longitude { get; set; }
+
+        public float? Latitude { get; set; }
     }
 }

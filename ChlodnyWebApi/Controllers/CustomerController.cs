@@ -7,7 +7,10 @@
     using System.Net.Http;
     using System.Web.Http;
 
-    using ChlodnyWebApi.BingMaps;
+    using Aspects;
+
+    using BingServices.BingMaps;
+
     using ChlodnyWebApi.Models;
 
     using DataAccess;
@@ -19,11 +22,11 @@
         private readonly BingMapsRest bingMapsRest = new BingMapsRest();
 
         // Retrieve = GET
+        [ExceptionHandlerAttribute]
         public IQueryable<Customer> GetCustomer()
         {
             bingMapsRest.GetLocationByAddress();
-            return this.contexts1.Customers;
-            //.Where(c => c.Deleted == false);
+            return this.contexts1.Customers.Where(c => c.Deleted == false);
         }
 
         public IQueryable<Customer> SearchCustomerFirstName(SearchValues value)
