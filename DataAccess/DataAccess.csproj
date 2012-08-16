@@ -96,6 +96,18 @@
     <Compile Include="Migrations\201206212019262_test.Designer.cs">
       <DependentUpon>201206212019262_test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201206212050472_GeoLocationTableColumns.cs" />
+    <Compile Include="Migrations\201206212050472_GeoLocationTableColumns.Designer.cs">
+      <DependentUpon>201206212050472_GeoLocationTableColumns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201206221743400_ChangedLatLongToAllowNull.cs" />
+    <Compile Include="Migrations\201206221743400_ChangedLatLongToAllowNull.Designer.cs">
+      <DependentUpon>201206221743400_ChangedLatLongToAllowNull.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201206271457514_GeoLocationToEmployee.cs" />
+    <Compile Include="Migrations\201206271457514_GeoLocationToEmployee.Designer.cs">
+      <DependentUpon>201206271457514_GeoLocationToEmployee.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

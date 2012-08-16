@@ -53,9 +53,11 @@
     <Compile Include="EntitiesChinook\Employee.cs" />
     <Compile Include="EntitiesChinook\Event.cs" />
     <Compile Include="EntitiesChinook\Genre.cs" />
+    <Compile Include="EntitiesChinook\GeoLocation.cs" />
     <Compile Include="EntitiesChinook\Invoice.cs" />
     <Compile Include="EntitiesChinook\InvoiceLine.cs" />
     <Compile Include="EntitiesChinook\MediaType.cs" />
+    <Compile Include="EntitiesChinook\Person.cs" />
     <Compile Include="EntitiesChinook\Playlist.cs" />
     <Compile Include="EntitiesChinook\PlaylistTrack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

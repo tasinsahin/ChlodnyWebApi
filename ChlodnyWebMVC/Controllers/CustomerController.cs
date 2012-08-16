@@ -30,6 +30,7 @@
         // Generic logger if something happens
         private static void Errorhandler(Task task)
         {
+
             if (task.Exception != null)
             {
                 Console.WriteLine("Exception {0}", task.Exception);

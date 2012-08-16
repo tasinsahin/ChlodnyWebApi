@@ -1,5 +1,7 @@
 namespace DomainClasses.EntitiesChinook
 {
+    using System.Data.Spatial;
+
     public class Customer
     {
         public int CustomerId { get; set; }
@@ -29,5 +31,11 @@ namespace DomainClasses.EntitiesChinook
         public bool Deleted { get; set; }
 
         public int? SupportRepId { get; set; }
+
+        public DbGeography GeoLoc { get; set; }
+
+        public float? Longitude { get; set; }
+
+        public float? Latitude { get; set; }
     }
 }
