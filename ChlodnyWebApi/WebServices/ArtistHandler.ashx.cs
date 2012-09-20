@@ -46,7 +46,7 @@ namespace ChlodnyWebApi.WebServices
             }
         }
 
-        public string GetArtist()
+        private string GetArtist()
         {
             var response = new JsonResponseMessage();
             var jSearializer = new System.Web.Script.Serialization.JavaScriptSerializer();
