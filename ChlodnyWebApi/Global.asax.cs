@@ -65,7 +65,7 @@
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
           //  BundleTable.Bundles.RegisterTemplateBundles();
-            BundleTable.Bundles.EnableDefaultBundles();
+            //  BundleTable.Bundles.EnableDefaultBundles();   -- todo chad this errors out, was this changed between RC and RTM
         }
 
         public static void RegisterApis(HttpConfiguration config)
