@@ -61,9 +61,7 @@ jQueryExample.GetAllCustomer = function() {
         success: function (result) {
             localCustomers = result;
         }
-    });
-    
-   
+    });  
 };
 
 jQueryExample.LoadDataView = function() {

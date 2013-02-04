@@ -110,31 +110,39 @@
         {
             using (var context = new ChinookContext())
             {
-                Customer request = null;
+                //Customer request = null;
 
-                if (customer.CustomerId != 0)
+                //if (customer.CustomerId != 0)
+                //{
+                //    request = context.Customers.Single(c => c.CustomerId == customer.CustomerId);
+                //}
+
+                //if (request == null)
+                //{
+                //    return this.PostCustomer(customer);
+                //}
+
+                var original = context.Customers.Find(customer.CustomerId);
+
+                if (original != null)
                 {
-                    request = context.Customers.Single(c => c.CustomerId == customer.CustomerId);
+                    context.Entry(original).CurrentValues.SetValues(customer);
+                    context.SaveChanges();
                 }
 
-                if (request == null)
-                {
-                    return this.PostCustomer(customer);
-                }
+                //// todo this has to have an easier way.  Customer.Attach throws an error
+                //request.FirstName = customer.FirstName;
+                //request.LastName = customer.LastName;
+                //request.Address = customer.Address;
+                //request.City = customer.City;
+                //request.PostalCode = customer.PostalCode;
+                //request.State = customer.State;
+                //request.Country = customer.Country;
+                //request.Fax = customer.Fax;
+                //request.Email = customer.Email;
+                //request.Company = customer.Company;
 
-                // todo this has to have an easier way.  Customer.Attach throws an error
-                request.FirstName = customer.FirstName;
-                request.LastName = customer.LastName;
-                request.Address = customer.Address;
-                request.City = customer.City;
-                request.PostalCode = customer.PostalCode;
-                request.State = customer.State;
-                request.Country = customer.Country;
-                request.Fax = customer.Fax;
-                request.Email = customer.Email;
-                request.Company = customer.Company;
-
-                context.SaveChanges();
+                //context.SaveChanges();
 
                 var response = Request.CreateResponse(HttpStatusCode.Accepted, customer);
                 response.Headers.Location = new Uri(Request.RequestUri, string.Format("Customer/{0}", customer.CustomerId));
